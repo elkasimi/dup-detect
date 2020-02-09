@@ -30,6 +30,7 @@ library:
     - unix
     - bytestring
     - cryptohash
+    - filepath
 
 executables:
   dup-detect-exe:

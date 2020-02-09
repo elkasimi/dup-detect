@@ -3,8 +3,9 @@ Is a binary tool to show duplicate files in a given directory.
 
 # How to build and run
 1. get stack building tool [install link](https://docs.haskellstack.org/en/stable/README/#how-to-install)
-2. cd dup-detect
-3. stack run your_directory_where_you_suspect_duplicates
+2. `cd dup-detect`
+3. `stack run your/directory/full/of/duplicates [extension]`
+i.e: `stack run ~/Downloads .jpg` 
 4. the duplicates if any will be displayed in console
 
 # How does it work?

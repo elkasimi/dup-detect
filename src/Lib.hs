@@ -4,17 +4,20 @@ import Control.Monad
 import Crypto.Hash.SHA256
 import qualified Data.ByteString as B
 import System.Directory
+import System.FilePath
 import System.Posix.Files
 import System.Posix.Types
 
-listFiles :: FilePath -> IO [FilePath]
-listFiles directory = do
-  let fullPath file | last directory == '/' = directory ++ file
-                    | otherwise = directory ++ "/" ++ file
+listFiles :: FilePath -> String -> IO [FilePath]
+listFiles fileExt directory = do
+  let fullPath file
+        | last directory == '/' = directory ++ file
+        | otherwise = directory ++ "/" ++ file
+      pred file = null fileExt || takeExtension file == fileExt
   contents <- map fullPath <$> listDirectory directory
-  files <- filterM doesFileExist contents
+  files <- filter pred <$> filterM doesFileExist contents
   dirs <- filterM doesDirectoryExist contents
-  dirsFiles <- mapM listFiles dirs
+  dirsFiles <- mapM (listFiles fileExt) dirs
   return $ files ++ concat dirsFiles
 
 getFileSize :: FilePath -> IO FileOffset

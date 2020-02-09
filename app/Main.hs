@@ -8,10 +8,13 @@ import System.Environment
 main :: IO ()
 main = do
   args <- getArgs
-  let directory = head args
+  let (directory, fileExt) =
+        case args of
+          [a] -> (a, "")
+          [a, b] -> (a, b)
   putStrLn $ "Directory set to " ++ directory
   putStrLn "Looking for duplicates .. "
-  files <- listFiles directory
+  files <- listFiles fileExt directory
   putStrLn $ "Found " ++ show (length files) ++ " files .."
   let groupedBy fun files = map (map snd) . groupBy (\i j -> fst i == fst j) . sort <$> mapM fun files
       fSize file = do
