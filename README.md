@@ -13,4 +13,4 @@ if files with same size contain duplicates.
 
 # References
 I get the idea from this repo originally: [dup_files_detector](https://github.com/anas-aso/dup_files_detector)
-with a Go implementation.
+with a Go implementation. I enjoyed creating a Haskell implementation with some optimisations ;)
