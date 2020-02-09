@@ -2,4 +2,6 @@
 dup-detect.cabal
 *~
 .idea
+.out
+
 
