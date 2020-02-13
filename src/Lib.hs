@@ -25,3 +25,6 @@ getFileSize path = fileSize <$> getFileStatus path
 
 getSHA256 :: FilePath -> IO B.ByteString
 getSHA256 path = hash <$> B.readFile path
+
+removeDuplicate :: FilePath -> IO ()
+removeDuplicate = removeFile

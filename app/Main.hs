@@ -19,7 +19,7 @@ main = do
   let groupedBy fun files = map (map snd) . groupBy (\i j -> fst i == fst j) . sort <$> mapM fun files
       fSize file = do
         size <- getFileSize file
-        return (size, file)
+        return (-size, file)
       fHash file = do
         hash <- getSHA256 file
         return (hash, file)
@@ -29,6 +29,19 @@ main = do
     forM_
       groupedByHash
       (\duplicates -> do
+         let count = length duplicates
+             zipWithIndex = zip [1 ..] :: [a] -> [(Int, a)]
+             getInts = map read . words <$> getLine :: IO [Int]
          putStrLn ""
          putStrLn "The following files are duplicates:"
-         forM_ duplicates putStrLn)
+         forM_ (zipWithIndex duplicates) (\(i, file) -> putStrLn $ show i ++ ": " ++ file)
+         putStrLn "Please enter the list of files to keep. 0 to keep all"
+         filesToKeepIndices <- getInts
+         let filesToRemove
+               | filesToKeepIndices == [0] = []
+               | otherwise = map (\i -> duplicates !! (i - 1)) $ filter (`notElem` filesToKeepIndices) [1 .. count]
+         putStrLn "The following files will be removed:"
+         forM_ filesToRemove putStrLn
+         putStrLn "Proceed? y/n"
+         answer <- getLine
+         when (answer == "y") $ forM_ filesToRemove removeDuplicate)
