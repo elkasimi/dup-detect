@@ -6,7 +6,7 @@ Is a binary tool to show duplicate files in a given directory.
 2. `cd dup-detect`
 3. `stack run your/directory/full/of/duplicates [extension]`
 i.e: `stack run ~/Downloads .jpg` 
-4. the duplicates if any will be displayed in console
+4. the duplicates if any will be displayed in console with a prompt to select which one to keep.
 
 # How does it work?
 It lists all files inside directory and if it detects that a given size occurs more than once it does check with SHA256
