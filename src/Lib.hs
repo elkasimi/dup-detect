@@ -1,12 +1,17 @@
 module Lib where
 
-import Control.Monad
-import Crypto.Hash.SHA256
+import Control.Monad (filterM)
+import Crypto.Hash.SHA256 (hash)
 import qualified Data.ByteString as B
 import System.Directory
-import System.FilePath
-import System.Posix.Files
-import System.Posix.Types
+  ( doesDirectoryExist,
+    doesFileExist,
+    listDirectory,
+    removeFile,
+  )
+import System.FilePath (takeExtension)
+import System.Posix.Files (fileSize, getFileStatus)
+import System.Posix.Types (FileOffset)
 
 listFiles :: FilePath -> String -> IO [FilePath]
 listFiles fileExt directory = do
